@@ -22,9 +22,9 @@ static inline uint64_t fsm_func(uint64_t x1, uint64_t x2, uint64_t x3) {
 
 static void strumok_step(strumok_ctx_t *ctx, int init_mode) {
     uint64_t new_r2 = transform_T(ctx->R[0]);
-    uint64_t new_r1 = ctx->R[1] + ctx->S[13];
+    uint64_t new_r1 = ctx->R[1] + (ctx->S[5] ^ ctx->R[0]);
     
-    uint64_t feedback = a_mul(ctx->S[0]) ^ ainv_mul(ctx->S[11]) ^ ctx->S[13];
+    uint64_t feedback = a_mul(ctx->S[0]) ^ ctx->S[2] ^ ainv_mul(ctx->S[11]) ^ ctx->S[15];
     
     if (init_mode) {
         feedback ^= fsm_func(ctx->S[15], ctx->R[0], ctx->R[1]);
